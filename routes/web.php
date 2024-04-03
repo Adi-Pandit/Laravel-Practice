@@ -8,3 +8,5 @@ Route::get('/users/create', [UserController::class, 'create'])->name('users.crea
 Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
 Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::put('/users/{id}/update', [UserController::class, 'update'])->name('users.update');
+Route::delete('/users/{id}/delete', [UserController::class, 'destroy'])->name('users.destroy');
+Route::get('/users/{id}/view', [UserController::class, 'view'])->name('users.view');

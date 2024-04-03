@@ -76,4 +76,13 @@ class UserController extends Controller
         $user->save();
         return back()->withSuccess('User Updated Successfully!');
     }
+    public function destroy($id) {
+        $user = User::where('id', $id)->first();
+        $user->delete();
+        return back()->withSuccess('User Deleted Successfully!');
+    }
+    public function view($id) {
+        $user = User::where('id', $id)->first();
+        return view('users.view', ['user' => $user]);
+    }
 }
