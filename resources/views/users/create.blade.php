@@ -50,6 +50,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-dark my-2">Submit</button>
+                        <a href="/" class="btn btn-danger my-2">Cancel</a>
                     </form>
                 </div>
             </div>

@@ -13,6 +13,11 @@
                 <p>Address: <b>{{ $user->address ? $user->address : '-' }}</b></p>
                 <p>Date of Birth: <b>{{ $user->date_of_birth }}</b></p>
                 <p>Email: <b>{{ $user->email }}</b></p>
+                <div class="row">
+                    <div class="col-auto">
+                        <a href="/" class="btn btn-danger my-2">Back</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

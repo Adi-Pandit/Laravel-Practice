@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function index() {
         $users = User::get();
-        return view('users.index', ['users'=>$users]);
+        return view('users.index', ['users'=> User::latest()->get()]);
     }
     public function create() {
         return view('users.create');
@@ -21,11 +21,12 @@ class UserController extends Controller
             'surname' => 'required',
             'contact_number' => 'required|numeric|unique:users,contact_number',
             'address' => 'nullable',
-            'date_of_birth' => 'required|date',
+            'date_of_birth' => 'required|date|before_or_equal:today',
             'email' => 'required|email|unique:users,email',
         ], [
             'contact_number.unique' => 'The contact number has already been taken.',
             'email.unique' => 'The email has already been taken.',
+            'date_of_birth.before_or_equal' => 'The date of birth must be before or equal to today\'s date.',
         ]);
     
         $user = new User;
@@ -37,7 +38,7 @@ class UserController extends Controller
         $user->email = $request->email;
     
         $user->save();
-        return back()->withSuccess('User Registered Successfully!');
+        return redirect()->route('users.index')->withSuccess('User Registered Successfully!');
     }
     public function edit($id) {
         $user = User::where('id', $id)->first();
@@ -55,7 +56,7 @@ class UserController extends Controller
                 Rule::unique('users')->ignore($user->id),
             ],
             'address' => 'nullable',
-            'date_of_birth' => 'required|date',
+            'date_of_birth' => 'required|date|before_or_equal:today',
             'email' => [
                 'required',
                 'email',
@@ -64,6 +65,7 @@ class UserController extends Controller
         ], [
             'contact_number.unique' => 'The contact number has already been taken.',
             'email.unique' => 'The email has already been taken.',
+            'date_of_birth.before_or_equal' => 'The date of birth must be before or equal to today\'s date.',
         ]);
     
         $user->name = $request->name;
@@ -74,12 +76,12 @@ class UserController extends Controller
         $user->email = $request->email;
     
         $user->save();
-        return back()->withSuccess('User Updated Successfully!');
+        return redirect()->route('users.index')->withSuccess('User Updated Successfully!');
     }
     public function destroy($id) {
         $user = User::where('id', $id)->first();
         $user->delete();
-        return back()->withSuccess('User Deleted Successfully!');
+        return redirect()->route('users.index')->withSuccess('User Deleted Successfully!');
     }
     public function view($id) {
         $user = User::where('id', $id)->first();

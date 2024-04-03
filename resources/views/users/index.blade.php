@@ -35,7 +35,7 @@
 
                         <a href="users/{{ $user->id }}/edit" class="btn btn-dark btn-sm">Edit</a>
                         
-                        <form method="POST" class="d-inline" action="users/{{ $user->id }}/delete">
+                        <form method="POST" class="d-inline" action="users/{{ $user->id }}/delete" onsubmit="return confirm('Are you sure you want to delete this user?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
