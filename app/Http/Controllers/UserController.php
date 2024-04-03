@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Validation\Rule;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -38,6 +40,12 @@ class UserController extends Controller
         $user->email = $request->email;
     
         $user->save();
+
+        $title = 'Welcome to the email service';
+        $body = 'Thank you for registration!';
+
+        Mail::to($user->email)->send(new WelcomeMail($title, $body));
+
         return redirect()->route('users.index')->withSuccess('User Registered Successfully!');
     }
     public function edit($id) {
